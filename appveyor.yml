@@ -1,6 +1,8 @@
 # https://www.appveyor.com/docs/build-environment/#build-worker-images
 image: Visual Studio 2017
 
+build: false
+
 test_script:
   - ps: "$(Get-Date) VARIABLES"
   - ps: Get-Variable | Format-Table -Autosize
