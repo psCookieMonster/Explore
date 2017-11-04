@@ -4,5 +4,5 @@ image: Visual Studio 2017
 build: false
 
 test_script:
-  - ps: "$(Get-Date) VARIABLES"
+  - ps: '"$(Get-Date) VARIABLES"'
   - ps: Get-Variable | Format-Table -Autosize
