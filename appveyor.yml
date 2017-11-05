@@ -5,7 +5,7 @@ build: false
 
 environment:
   debug_artifacts: '_debug'
-  APPVEYOR_RDP_PASSWORD: 'honestly, who cares if you get this'
+  APPVEYOR_RDP_PASSWORD: 'Who cares!1'
 
 test_script:
   - ps: |
