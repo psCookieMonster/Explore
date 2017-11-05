@@ -26,6 +26,9 @@ test_script:
       Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:debug_artifacts\Env.xml" -Depth $Depth
       Get-PackageProvider | Export-CliXml -Path "$ENV:debug_artifacts\PackageProvider.xml" -Depth $Depth
       Get-PackageSource | Export-CliXml -Path "$ENV:debug_artifacts\PackageSource.xml" -Depth $Depth
+      "Done gathering data"
 
 artifacts:
   - path: "$(debug_artifacts)"
+    name: "debug artifacts"
+    type: Zip
