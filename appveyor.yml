@@ -13,16 +13,9 @@ environment:
 test_script:
   - ps: |
 
+      # https://help.appveyor.com/discussions/problems/9599-rdp-invalid-login-credentials
       net.exe user /add wtf "Password123!" /Y
       net.exe localgroup administrators wtf /add
-
-      $Groups = Get-LocalGroup
-      foreach($Group in $Groups)
-      {
-        "GROUP MMEMBERSHIP FOR $GROUP"
-        $Group | Get-LocalGroupMember | Format-Table -Autosize
-      }
-
 
       "PSVersionTable:"
       $PSVersionTable
@@ -37,9 +30,9 @@ test_script:
       $null = mkdir "$ENV:debug_artifacts" -Force
 
       Get-Variable | Export-CliXml -Path "$ENV:debug_artifacts\Variables.xml" -Depth $Depth
-      Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\LoadedModules.xml" -Depth $Depth
-      Get-Module -ListAvailable | Export-CliXml -Path "$ENV:debug_artifacts\AllModules.xml" -Depth $Depth
-      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:debug_artifacts\Env.xml" -Depth $Depth
+      Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\LoadedModules.xml" -Depth 1
+      Get-Module -ListAvailable | Export-CliXml -Path "$ENV:debug_artifacts\AllModules.xml" -Depth 1
+      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:debug_artifacts\Env.xml" -Depth 1
       Get-PackageProvider | Export-CliXml -Path "$ENV:debug_artifacts\PackageProvider.xml" -Depth $Depth
       Get-PackageSource | Export-CliXml -Path "$ENV:debug_artifacts\PackageSource.xml" -Depth $Depth
       "Done gathering data"
