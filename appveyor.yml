@@ -4,5 +4,9 @@ image: Visual Studio 2017
 build: false
 
 test_script:
-  - ps: '"$(Get-Date) VARIABLES"'
-  - ps: Get-Variable | Format-Table -Autosize
+  - ps: '"test_script 1st PID is $ENV:PID"'
+  - ps: '"test_script 2nd PID is $ENV:PID"'
+
+deploy_script:
+  - ps: '"deploy_script 1st PID is $ENV:PID"'
+  - ps: '"deploy_script 2nd PID is $ENV:PID"'
