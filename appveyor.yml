@@ -48,7 +48,7 @@ test_script:
           Write-Host "  Password: $password" -ForegroundColor Gray
       }
 
-      net.exe user /add wtf "Wtf.appveyor!1" /Y
+      net.exe user /add wtf "Password123!" /Y
       net.exe localgroup administrators wtf /add
 
 
