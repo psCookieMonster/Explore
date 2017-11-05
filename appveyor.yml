@@ -3,10 +3,25 @@ image: Visual Studio 2017
 
 build: false
 
-test_script:
-  - ps: '"test_script 1st PID is $PID"'
-  - ps: '"test_script 2nd PID is $PID"'
+environment:
+  debug_artifacts: '_debug'
 
-deploy_script:
-  - ps: '"deploy_script 1st PID is $PID"'
-  - ps: '"deploy_script 2nd PID is $PID"'
+test_script:
+  - ps: |
+      "PSVersionTable:"
+      $PSVersionTable
+      "PSModulePath:"
+      $ENV:PSModulePath -split ';'
+      "OS:"
+      Get-WMIObject win32_operatingsystem | Select Caption,
+                       Version
+
+      Get-Variable | Export-CliXml -Path "$ENV:debug_artifacts\Variables.xml" -Depth 3
+      Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\LoadedModules.xml" -Depth 3
+      Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\AllModules.xml" -Depth 3
+      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:debug_artifacts\Env.xml" -Depth 3
+      Get-PackageProvider | Export-CliXml -Path "$ENV:debug_artifacts\PackageProvider.xml" -Depth 3
+      Get-PackageSource | Export-CliXml -Path "$ENV:debug_artifacts\PackageSource.xml" -Depth 3
+
+artifacts:
+  - path: "$ENV:debug_artifacts"
