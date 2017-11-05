@@ -4,9 +4,9 @@ image: Visual Studio 2017
 build: false
 
 test_script:
-  - ps: '"test_script 1st PID is $ENV:PID"'
-  - ps: '"test_script 2nd PID is $ENV:PID"'
+  - ps: '"test_script 1st PID is $PID"'
+  - ps: '"test_script 2nd PID is $PID"'
 
 deploy_script:
-  - ps: '"deploy_script 1st PID is $ENV:PID"'
-  - ps: '"deploy_script 2nd PID is $ENV:PID"'
+  - ps: '"deploy_script 1st PID is $PID"'
+  - ps: '"deploy_script 2nd PID is $PID"'
