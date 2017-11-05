@@ -5,9 +5,14 @@ build: false
 
 environment:
   debug_artifacts: '_debug'
+  APPVEYOR_RDP_PASSWORD: 'honestly, who cares if you get this'
 
 test_script:
   - ps: |
+
+      # RDP access
+      iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
       "PSVersionTable:"
       $PSVersionTable
       "`n"
