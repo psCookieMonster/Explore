@@ -10,12 +10,15 @@ test_script:
   - ps: |
       "PSVersionTable:"
       $PSVersionTable
+      "`n"
       "PSModulePath:"
       $ENV:PSModulePath -split ';'
+      "`n"
       "OS:"
       Get-WMIObject win32_operatingsystem | Select Caption,
                        Version
 
+      mkdir "$ENV:debug_artifacts" -Force
       Get-Variable | Export-CliXml -Path "$ENV:debug_artifacts\Variables.xml" -Depth 3
       Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\LoadedModules.xml" -Depth 3
       Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\AllModules.xml" -Depth 3
