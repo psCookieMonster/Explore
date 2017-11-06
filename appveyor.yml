@@ -1,22 +1,31 @@
 # https://www.appveyor.com/docs/build-environment/#build-worker-images
 image: Visual Studio 2017
 
+environment:
+  my_variable:
+    slackuri: +NApmhZEk1qU/bSV8VZL02kNIoRbehJBI0vb6CB5TFc+OcSRFMyU62ZvwFplu+5aHlqAYZHsyu0gK5qXooOQVNCo+hk4aQqfghrytPKa6+I=
+
 build: false
 
 test_script:
   - ps: |
 
-      # https://help.appveyor.com/discussions/problems/9599-rdp-invalid-login-credentials
-      net.exe user /add wtf "Password123!" /Y
-      net.exe localgroup administrators wtf /add
+      Install-Module PSSlack, BuildHelpers
+      Import-Module PSSlack, BuildHelpers
 
-      Write-Host "1"
-      Write-Verbose "2" -Verbose
-      Write-Output "3"
-      Write-Warning "4"
-      Write-Error "5"
-      Write-Host "6"
-      Write-Verbose "7" -Verbose
-      Write-Output "8"
-      Write-Warning "9"
-      Write-Error "10"
+      Set-BuildEnvironment
+
+      $RandomDebugInfo = Get-ChildItem ENV:BH*
+      $RandomDebugInfo = "```$RandomDebugInfo```"
+
+      New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
+                           -Title 'Some alert or information for Slack!' `
+                           -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
+                           -Text $RandomDebugInfo `
+                           -Pretext 'Everything is broken' `
+                           -AuthorName 'AppVeyor' `
+                           -Fallback 'Your client is bad' `
+                           -MarkDownFields 'text','pretext' |
+    New-SlackMessage -Channel '@pscookiemonster' `
+                     -IconEmoji :bomb: |
+    Send-SlackMessage -Uri $ENV:slackuri
