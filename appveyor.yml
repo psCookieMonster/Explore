@@ -16,7 +16,7 @@ test_script:
       Set-BuildEnvironment
 
       $RandomDebugInfo = Get-ChildItem ENV:BH*
-      $RandomDebugInfo = "```$RandomDebugInfo```"
+      $RandomDebugInfo = "``````$RandomDebugInfo``````"
 
       New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
                            -Title 'Some alert or information for Slack!' `
