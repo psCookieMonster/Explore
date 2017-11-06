@@ -3,7 +3,7 @@ image: Visual Studio 2017
 
 environment:
   slackuri:
-    secure: +NApmhZEk1qU/bSV8VZL02kNIoRbehJBI0vb6CB5TFc+OcSRFMyU62ZvwFplu+5aHlqAYZHsyu0gK5qXooOQVNCo+hk4aQqfghrytPKa6+I=
+    secure: AyLOqq7YQfpDl7pHdsjFDh36Qx73nKhnnLS0OPLZa9eL17vQrjt+aQop5oW0FF2Rub+RwBfkp0NNm3BtFZro+BaO3OGPWx3txhm6IX/Tcv8=
 
 build: false
 
