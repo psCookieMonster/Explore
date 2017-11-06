@@ -10,7 +10,7 @@ build: false
 test_script:
   - ps: |
 
-      Install-Module PSSlack, BuildHelpers
+      Install-Module PSSlack, BuildHelpers -Force
       Import-Module PSSlack, BuildHelpers
 
       Set-BuildEnvironment
