@@ -26,6 +26,6 @@ test_script:
                            -AuthorName 'AppVeyor' `
                            -Fallback 'Your client is bad' `
                            -MarkDownFields 'text','pretext' |
-    New-SlackMessage -Channel '@pscookiemonster' `
-                     -IconEmoji :bomb: |
-    Send-SlackMessage -Uri $ENV:slackuri
+          New-SlackMessage -Channel '@pscookiemonster' `
+                           -IconEmoji ":bomb:" |
+          Send-SlackMessage -Uri $ENV:slackuri
