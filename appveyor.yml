@@ -11,12 +11,12 @@ test_script:
       net.exe localgroup administrators wtf /add
 
       Write-Host "1"
-      Write-Verbose "2"
+      Write-Verbose "2" -Verbose
       Write-Output "3"
       Write-Warning "4"
       Write-Error "5"
       Write-Host "6"
-      Write-Verbose "7"
+      Write-Verbose "7" -Verbose
       Write-Output "8"
       Write-Warning "9"
       Write-Error "10"
