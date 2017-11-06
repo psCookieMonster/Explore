@@ -1,14 +1,7 @@
 # https://www.appveyor.com/docs/build-environment/#build-worker-images
 image: Visual Studio 2017
 
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 build: false
-
-environment:
-  debug_artifacts: '_debug'
-  APPVEYOR_RDP_PASSWORD: 'Password123'
 
 test_script:
   - ps: |
@@ -17,27 +10,13 @@ test_script:
       net.exe user /add wtf "Password123!" /Y
       net.exe localgroup administrators wtf /add
 
-      "PSVersionTable:"
-      $PSVersionTable
-      "`n"
-      "PSModulePath:"
-      $ENV:PSModulePath -split ';'
-      "`n"
-      "OS:"
-      Get-WMIObject win32_operatingsystem | Select Caption, Version
-
-      $Depth = 2
-      $null = mkdir "$ENV:debug_artifacts" -Force
-
-      Get-Variable | Export-CliXml -Path "$ENV:debug_artifacts\Variables.xml" -Depth $Depth
-      Get-Module | Export-CliXml -Path "$ENV:debug_artifacts\LoadedModules.xml" -Depth 1
-      Get-Module -ListAvailable | Export-CliXml -Path "$ENV:debug_artifacts\AllModules.xml" -Depth 1
-      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:debug_artifacts\Env.xml" -Depth 1
-      Get-PackageProvider | Export-CliXml -Path "$ENV:debug_artifacts\PackageProvider.xml" -Depth $Depth
-      Get-PackageSource | Export-CliXml -Path "$ENV:debug_artifacts\PackageSource.xml" -Depth $Depth
-      "Done gathering data"
-
-artifacts:
-  - path: "$(debug_artifacts)"
-    name: "debug artifacts"
-    type: Zip
+      Write-Host "1"
+      Write-Verbose "2"
+      Write-Output "3"
+      Write-Warning "4"
+      Write-Error "5"
+      Write-Host "6"
+      Write-Verbose "7"
+      Write-Output "8"
+      Write-Warning "9"
+      Write-Error "10"
