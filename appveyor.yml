@@ -2,8 +2,8 @@
 image: Visual Studio 2017
 
 environment:
-  my_variable:
-    slackuri: +NApmhZEk1qU/bSV8VZL02kNIoRbehJBI0vb6CB5TFc+OcSRFMyU62ZvwFplu+5aHlqAYZHsyu0gK5qXooOQVNCo+hk4aQqfghrytPKa6+I=
+  slackuri:
+    secure: +NApmhZEk1qU/bSV8VZL02kNIoRbehJBI0vb6CB5TFc+OcSRFMyU62ZvwFplu+5aHlqAYZHsyu0gK5qXooOQVNCo+hk4aQqfghrytPKa6+I=
 
 build: false
 
