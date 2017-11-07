@@ -3,21 +3,32 @@ image: Visual Studio 2017
 
 build: false
 
-# Predetermined relative path for debug logs
 environment:
-  dpath: '_debug'
+  slackuri:
+    secure: AyLOqq7YQfpDl7pHdsjFDh36Qx73nKhnnLS0OPLZa9eL17vQrjt+aQop5oW0FF2Rub+RwBfkp0NNm3BtFZro+BaO3OGPWx3txhm6IX/Tcv8=
+
+build: false
 
 test_script:
   - ps: |
-      $null = mkdir "$ENV:dpath" -Force
-      Get-Variable | Export-CliXml -Path "$ENV:dpath\Variables.xml"
-      Get-Module | Export-CliXml -Path "$ENV:dpath\ModulesLoaded.xml" -Depth 1
-      Get-Module -ListAvailable | Export-CliXml -Path "$ENV:dpath\ModulesAvailable.xml" -Depth 1
-      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:dpath\Env.xml"
-      Get-PackageProvider | Export-CliXml -Path "$ENV:dpath\PackageProvider.xml"
-      Get-PackageSource | Export-CliXml -Path "$ENV:dpath\PackageSource.xml"
 
-artifacts:
-  - path: "$(dpath)"
-    name: "debug artifacts"
-    type: Zip
+      Install-Module PSSlack, BuildHelpers -Force
+      Import-Module PSSlack, BuildHelpers
+
+      Set-BuildEnvironment
+
+      $RandomDebugInfo = Get-ChildItem ENV:BH* | Out-String -Width 79
+      $RandomDebugInfo = "``````$RandomDebugInfo``````"
+
+      New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
+                           -Title "``$ENV:BHProjectName`` details:" `
+                           -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
+                           -Text $RandomDebugInfo `
+                           -Pretext 'Everything is broken' `
+                           -AuthorName 'AppVeyor' `
+                           -Fallback 'Your client is bad' `
+                           -MarkDownFields 'text','pretext' |
+          New-SlackMessage -Channel '@pscookiemonster' `
+                           -IconEmoji ":bomb:" |
+          Send-SlackMessage -Uri $ENV:slackuri
+
