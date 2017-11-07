@@ -2,30 +2,10 @@
 image: Visual Studio 2017
 
 environment:
-  slackuri:
-    secure: AyLOqq7YQfpDl7pHdsjFDh36Qx73nKhnnLS0OPLZa9eL17vQrjt+aQop5oW0FF2Rub+RwBfkp0NNm3BtFZro+BaO3OGPWx3txhm6IX/Tcv8=
+  some_secret:
+    secure: HMr/gyn8EQUSnWEOp+V4WQ==
 
 build: false
 
 test_script:
-  - ps: |
-
-      Install-Module PSSlack, BuildHelpers -Force
-      Import-Module PSSlack, BuildHelpers
-
-      Set-BuildEnvironment
-
-      $RandomDebugInfo = Get-ChildItem ENV:BH* | Out-String -Width 79
-      $RandomDebugInfo = "``````$RandomDebugInfo``````"
-
-      New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
-                           -Title 'Some alert or information for Slack!' `
-                           -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
-                           -Text $RandomDebugInfo `
-                           -Pretext 'Everything is broken' `
-                           -AuthorName 'AppVeyor' `
-                           -Fallback 'Your client is bad' `
-                           -MarkDownFields 'text','pretext' |
-          New-SlackMessage -Channel '@pscookiemonster' `
-                           -IconEmoji ":bomb:" |
-          Send-SlackMessage -Uri $ENV:slackuri
+  - ps: dir "env:"
