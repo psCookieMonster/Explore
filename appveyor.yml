@@ -16,7 +16,7 @@ test_script:
       Set-BuildEnvironment
 
       $RandomDebugInfo = Get-ChildItem ENV:BH* | Out-String -Width 79
-      $RandomDebugInfo = "``````$RandomDebugInfo``````"
+      $RandomDebugInfo = "``````$RandomDebugInfo``````".trim()
 
       New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
                            -Title "[$ENV:BHProjectName] BuildHelpers data:" `
