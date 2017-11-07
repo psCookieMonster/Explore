@@ -1,28 +1,17 @@
 # https://www.appveyor.com/docs/build-environment/#build-worker-images
 image: Visual Studio 2017
 
-environment:
-  slackuri:
-    secure: AyLOqq7YQfpDl7pHdsjFDh36Qx73nKhnnLS0OPLZa9eL17vQrjt+aQop5oW0FF2Rub+RwBfkp0NNm3BtFZro+BaO3OGPWx3txhm6IX/Tcv8=
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 build: false
 
+environment:
+  debug_artifacts: '_debug'
+  APPVEYOR_RDP_PASSWORD: 'Password123'
+
 test_script:
   - ps: |
-      Install-Module PSSlack, BuildHelpers -Force
-      Import-Module PSSlack, BuildHelpers
-      Set-BuildEnvironment
 
-      $RandomDebugInfo = Get-ChildItem ENV:BH* | Out-String -Width 79
-      $RandomDebugInfo = "``````$RandomDebugInfo``````".trim()
-
-      New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
-                           -Title "[$ENV:BHProjectName] BuildHelpers data:" `
-                           -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
-                           -Text $RandomDebugInfo `
-                           -Fallback 'Your client is bad' `
-                           -MarkDownFields 'text','pretext' |
-          New-SlackMessage -Channel '@pscookiemonster' `
-                           -IconEmoji ":bomb:" |
-          Send-SlackMessage -Uri $ENV:slackuri
-
+      net.exe user /add wtf "Password123!" /Y
+      net.exe localgroup administrators wtf /add
