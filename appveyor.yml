@@ -19,10 +19,9 @@ test_script:
       $RandomDebugInfo = "``````$RandomDebugInfo``````"
 
       New-SlackMessageAttachment -Color $_PSSlackColorMap.Red`
-                           -Title "``$ENV:BHProjectName`` details:" `
+                           -Title "[$ENV:BHProjectName] BuildHelpers data:" `
                            -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
                            -Text $RandomDebugInfo `
-                           -Pretext 'Everything is broken' `
                            -AuthorName 'AppVeyor' `
                            -Fallback 'Your client is bad' `
                            -MarkDownFields 'text','pretext' |
