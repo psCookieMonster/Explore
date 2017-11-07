@@ -9,10 +9,8 @@ build: false
 
 test_script:
   - ps: |
-
       Install-Module PSSlack, BuildHelpers -Force
       Import-Module PSSlack, BuildHelpers
-
       Set-BuildEnvironment
 
       $RandomDebugInfo = Get-ChildItem ENV:BH* | Out-String -Width 79
@@ -22,7 +20,6 @@ test_script:
                            -Title "[$ENV:BHProjectName] BuildHelpers data:" `
                            -TitleLink https://www.youtube.com/watch?v=TmpRs7xN06Q `
                            -Text $RandomDebugInfo `
-                           -AuthorName 'AppVeyor' `
                            -Fallback 'Your client is bad' `
                            -MarkDownFields 'text','pretext' |
           New-SlackMessage -Channel '@pscookiemonster' `
