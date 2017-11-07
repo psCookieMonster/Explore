@@ -8,4 +8,4 @@ environment:
 build: false
 
 test_script:
-  - ps: "$ENV:some_secret"
+  - ps: "$ENV:some_secret is 'not so secret!'"
