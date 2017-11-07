@@ -1,11 +1,23 @@
 # https://www.appveyor.com/docs/build-environment/#build-worker-images
 image: Visual Studio 2017
 
-environment:
-  some_secret:
-    secure: HMr/gyn8EQUSnWEOp+V4WQ==
-
 build: false
 
+# Predetermined relative path for debug logs
+environment:
+  dpath: '_debug'
+
 test_script:
-  - ps: Write-Output "$ENV:some_secret is 'not so secret!'"
+  - ps: |
+      $null = mkdir "$ENV:dpath" -Force
+      Get-Variable | Export-CliXml -Path "$ENV:dpath\Variables.xml"
+      Get-Module | Export-CliXml -Path "$ENV:dpath\ModulesLoaded.xml" -Depth 1
+      Get-Module -ListAvailable | Export-CliXml -Path "$ENV:dpath\ModulesAvailable.xml" -Depth 1
+      Get-ChildItem "ENV:" | Export-CliXml -Path "$ENV:dpath\Env.xml"
+      Get-PackageProvider | Export-CliXml -Path "$ENV:dpath\PackageProvider.xml"
+      Get-PackageSource | Export-CliXml -Path "$ENV:dpath\PackageSource.xml"
+
+artifacts:
+  - path: "$(dpath)"
+    name: "debug artifacts"
+    type: Zip
